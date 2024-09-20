@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: goorderflow-rabbitmq
+    container_name: goorderflow-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  web:
+    build: 
+      context: .
+      dockerfile: ./cmd/web/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+  processor:
+    build: 
+      context: .
+      dockerfile: ./cmd/processor/Dockerfile
+    depends_on:
+      - rabbitmq
+  notifier:
+    build: 
+      context: .
+      dockerfile: ./cmd/notifier/Dockerfile
+    depends_on:
+      - rabbitmq
