@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Копируем go.mod и go.sum из корня проекта
 COPY ../../go.mod ../../go.sum ./
-
+COPY ./../templates/index.html /app/
 # Загружаем зависимости
 RUN go mod download
 
